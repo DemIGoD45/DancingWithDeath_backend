@@ -35,18 +35,18 @@
     ddNewAppointments(); // (parameters received by res.body)
     // Success ==>
     {
-            msg: "Cita guardada correctamente",
-            data: {
-                date: "2022-01-24T11:45:00.000Z",
-                email: "Esta es la info de contacto"
-            }
+        msg: "Cita guardada correctamente",
+        data: {
+            date: "2022-01-24T11:45:00.000Z",
+            email: "Esta es la info de contacto"
+        }
     }
 
     // Error ==> 
     {
-            error: true,
-            date: "Formato de fecha incorrecto, se requiere un forma yyyy-mm-dd",
-            hour: "La hora no es valida, debe de ser en horarios de oficina"
+        error: true,
+        date: "Formato de fecha incorrecto, se requiere un forma yyyy-mm-dd",
+        hour: "La hora no es valida, debe de ser en horarios de oficina"
     }
 
     ```
