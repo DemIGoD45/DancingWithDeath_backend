@@ -35,18 +35,18 @@
     ddNewAppointments(); // (parameters received by res.body)
     // Success ==>
     {
-    msg: "Cita guardada correctamente",
-    data: {
-        date: "2022-01-24T11:45:00.000Z",
-        email: "Esta es la info de contacto"
-    }
+            msg: "Cita guardada correctamente",
+            data: {
+                date: "2022-01-24T11:45:00.000Z",
+                email: "Esta es la info de contacto"
+            }
     }
 
     // Error ==> 
     {
-    error: true,
-    date: "Formato de fecha incorrecto, se requiere un forma yyyy-mm-dd",
-    hour: "La hora no es valida, debe de ser en horarios de oficina"
+            error: true,
+            date: "Formato de fecha incorrecto, se requiere un forma yyyy-mm-dd",
+            hour: "La hora no es valida, debe de ser en horarios de oficina"
     }
 
     ```
@@ -65,21 +65,21 @@
     isOfficeHour(hour);
     // => The time does not comply with the format
     return {
-    msg = "The time does not comply with the format 24hrs (ejemplo: 00:00, 01:30)",
-    isValid: false
+        msg = "The time does not comply with the format 24hrs (ejemplo: 00:00, 01:30)",
+        isValid: false
     }
 
     // => The time is not valid, it must be during office hours.
     return {
-    msg = "The time is not valid, it must be during office hours.",
-    isValid: false
+        msg = "The time is not valid, it must be during office hours.",
+        isValid: false
     }
 
     // => Succes
     return {
-    msg = "",
-    isValid: true,
-    hour: [10:00]
+        msg = "",
+        isValid: true,
+        hour: [10:00]
     }
 
     ```
@@ -94,21 +94,21 @@
     isOfficeDate(date);
     // => The date does not comply with the format
     return {
-    msg = "The date does not comply with the format year-month-day",
-    isValid: false
+        msg = "The date does not comply with the format year-month-day",
+        isValid: false
     }
 
     // => The date is not valid, it must be during office date.
     return {
-    msg = "The date is not valid, it must be during date office",
-    isValid: false
+        msg = "The date is not valid, it must be during date office",
+        isValid: false
     }
 
     // => Succes
     return {
-    msg = "",
-    isValid: true,
-    hour: [2022-2-19]
+        msg = "",
+        isValid: true,
+        hour: [2022-2-19]
     }
 
     ```
