@@ -11,14 +11,14 @@ function getAllAppointments (req, res) {
     //const horario = getAllAppointmentsByDate(month, day, year);
 
     if(horario.length > 0) {
-      res.json ({
+      res.status().json ({
         msg: "Agenda",
         data: horario
       })
       return;
     }
     
-    res.json({ msg: "there's no data", data: null});
+    res.status(200).json({ msg: "there's no data", data: null});
     
 }
 
@@ -72,7 +72,7 @@ function addNewAppointments  (req, res) {
   
     } else {
       agenda.push(newCita);
-      res.json({
+      res.status(201).json({
         msg: "Cita guardada correctamente",
         data: newCita
       })
