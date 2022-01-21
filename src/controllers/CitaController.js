@@ -101,8 +101,6 @@ function isHourTaken (newCita, arrayCitas) {
     arrayCitas = orderAppointments(arrayCitas);
 
     for(let cita of arrayCitas) {
-      //console.log(cita.getJustHour(), newCita.getJustHour(), newCita.getFullStartHour(), cita.getFullFinishHour(), newCita.getFullStartHour(), cita.getFullFinishHour())
-      //console.log(cita.getJustHour() === newCita.getJustHour(), !newCita.getFullStartHour() >= cita.getFullFinishHour(), newCita.getFullStartHour() < cita.getFullFinishHour())
       if(cita.getJustHour() === newCita.getJustHour() || !newCita.getFullStartHour() >= cita.getFullFinishHour() || newCita.getFullStartHour() < cita.getFullFinishHour()) {
         hourData.msg = "La hora ya ha sido tomada";
         hourData.isTaken = true;
