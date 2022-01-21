@@ -116,7 +116,7 @@
 
 ---
 - **getAllAppointmentsByDate**: filters out appointments that are equal in date with the parameter
-    + date `Cita`
+    + appointment `Cita`
     ```javascript
 
     getAllAppointmentsByDate(appointment); // Appointment is an instance 
