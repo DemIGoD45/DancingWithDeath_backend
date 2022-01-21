@@ -13,12 +13,14 @@ Cita.prototype.getJustHour = function () {
 }
 
 Cita.prototype.getFullFinishHour = function () {
-    return `${this.date.getUTCHours() + 1}:${this.date.getMinutes()}`
+    let minute = this.date.getMinutes();
+    return `${this.date.getUTCHours() + 1}:${((minute < 10) ? '0' : '') + minute}`
 }
 
 
 Cita.prototype.getFullStartHour = function () {
-    return `${this.date.getUTCHours()}:${this.date.getMinutes()}`
+    let minute = this.date.getMinutes();
+    return `${this.date.getUTCHours()}:${((minute < 10) ? '0' : '') + minute}`
 }
 
 module.exports = Cita;

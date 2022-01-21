@@ -6,12 +6,12 @@ function getAllAppointments (req, res) {
 
     const { month, day, year } = req.params;
 
-    let horario = agenda.filter(elem => elem.getFullDate() === `${month} ${day} ${year}`);
+    let horario = agenda.filter(elem => elem.getFullDate() === `${month-1} ${day} ${year}`);
 
     //const horario = getAllAppointmentsByDate(month, day, year);
-
     if(horario.length > 0) {
-      res.status().json ({
+      horario = orderAppointments(horario);
+      res.status(200).json ({
         msg: "Agenda",
         data: horario
       })
@@ -101,6 +101,8 @@ function isHourTaken (newCita, arrayCitas) {
     arrayCitas = orderAppointments(arrayCitas);
 
     for(let cita of arrayCitas) {
+      //console.log(cita.getJustHour(), newCita.getJustHour(), newCita.getFullStartHour(), cita.getFullFinishHour(), newCita.getFullStartHour(), cita.getFullFinishHour())
+      //console.log(cita.getJustHour() === newCita.getJustHour(), !newCita.getFullStartHour() >= cita.getFullFinishHour(), newCita.getFullStartHour() < cita.getFullFinishHour())
       if(cita.getJustHour() === newCita.getJustHour() || !newCita.getFullStartHour() >= cita.getFullFinishHour() || newCita.getFullStartHour() < cita.getFullFinishHour()) {
         hourData.msg = "La hora ya ha sido tomada";
         hourData.isTaken = true;
