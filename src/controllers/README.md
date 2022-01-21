@@ -32,7 +32,7 @@
 
     ```javascript
 
-    ddNewAppointments(); // (parameters received by res.body)
+    addNewAppointments(); // (parameters received by res.body)
     // Success ==>
     {
         msg: "Cita guardada correctamente",
