@@ -12,6 +12,10 @@ Cita.prototype.getJustHour = function () {
     return this.date.getUTCHours();
 }
 
+Cita.prototype.addMinutes = function (minutos) {
+    this.date.setMinutes(this.date.getMinutes() + minutos);
+}
+
 Cita.prototype.getFullFinishHour = function () {
     let minute = this.date.getMinutes();
     let hora = this.date.getUTCHours() + 1;

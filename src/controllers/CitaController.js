@@ -4,30 +4,31 @@ let agenda = [];
 
 function getAllAppointments (req, res) {
 
-  const { month, day, year } = req.params;
-  const { filtrar } = req.query;
+  const { month, day, year } = req.params; // fecha que se quiere saber las horas disponibles para reservar
+  const filtrar = req.query.filtrar;      // true ---> obtiene solo las horas disponibles, false ---> obtiene las horas en que la mueste está ocupada.
 
   if(month && day && year) {
-
-    let horario = agenda.filter(elem => elem.getFullDate() === `${month-1} ${day} ${year}`);
+    let horario;
+    
+    horario = agenda.filter(elem => elem.getFullDate() === `${month-1} ${day} ${year}`);
   
     //const horario = getAllAppointmentsByDate(month, day, year);
-    if(horario.length > 0) {
+    //if(horario.length > 0) {
       
-      horario = orderAppointments(horario);
+    horario = orderAppointments(horario);
 
-      if(filtrar) {
-
-      }
-      
-      res.status(200).json ({
-        msg: "Agenda",
-        data: horario
-      })
-      return;
+    if(filtrar === 'true') {
+      horario = _getHoursFreeByDay(horario, month, day, year);
     }
       
-    res.status(200).json({ msg: "there's no data", data: null});
+    res.status(200).json ({
+      msg: "Agenda",
+      data: horario
+    })
+
+    //}
+    //res.status(200).json({ msg: "there's no data", data: null});
+
   } else {
     res.status(400).json({ msg: "month, day and year are requerided", data: null})
   }
@@ -99,15 +100,23 @@ function addNewAppointments  (req, res) {
 }
 
 function _getHoursFreeByDay (agenda, month, day, year) {
+  console.log('entramos aquí')
   let startHour = new Date(Date.UTC(year, month, day, 9, 0));
   const INCREMENTO = 15;
 
+  let citraPlant = new Cita(startHour, "");
 
+  let hoursFree = [];
 
+  while(citraPlant.getFullStartHour() <= '17:00') {
+    if (!isHourTaken(citraPlant, agenda)) {
+      hoursFree.push(citraPlant.getFullStartHour());
+    }
 
+    citraPlant.addMinutes(INCREMENTO);
+  }
 
-
-  return horasLibres;
+  return hoursFree;
 }
 
 function getAllAppointmentsByDate (appointment) {
