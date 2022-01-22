@@ -34,8 +34,8 @@
 - **[ POST ] add New Appointments**
 
     ```javascript
-
-    fetch('http://localhost:3001/reto/api/add', {
+    
+    fetch('http://localhost:3001/api/cita/add', {
         method: 'POST',
         body: {
                 fecha: "2022-01-24",

@@ -4,22 +4,34 @@ let agenda = [];
 
 function getAllAppointments (req, res) {
 
-    const { month, day, year } = req.params;
+  const { month, day, year } = req.params;
+  const { filtrar } = req.query;
+
+  if(month && day && year) {
 
     let horario = agenda.filter(elem => elem.getFullDate() === `${month-1} ${day} ${year}`);
-
+  
     //const horario = getAllAppointmentsByDate(month, day, year);
     if(horario.length > 0) {
+      
       horario = orderAppointments(horario);
+
+      if(filtrar) {
+
+      }
+      
       res.status(200).json ({
         msg: "Agenda",
         data: horario
       })
       return;
     }
-    
+      
     res.status(200).json({ msg: "there's no data", data: null});
-    
+  } else {
+    res.status(400).json({ msg: "month, day and year are requerided", data: null})
+  }
+
 }
 
 function addNewAppointments  (req, res) {
@@ -57,7 +69,7 @@ function addNewAppointments  (req, res) {
       // false -> la hora está disponible
       let hourData =  isHourTaken (newCita, resultAgenda);
   
-      if(!hourData.isTaken) {
+      if(!hourData) {
         agenda.push(newCita);
         res.json({
           msg: "Cita guardada correctamente",
@@ -65,7 +77,7 @@ function addNewAppointments  (req, res) {
         })
       } else {
         res.status(400).json({
-          msg: hourData.msg,
+          msg: "La hora ya no está disponible, favor de seleccionar otra",
           data: newCita
         });
       }
@@ -86,6 +98,18 @@ function addNewAppointments  (req, res) {
   }
 }
 
+function _getHoursFreeByDay (agenda, month, day, year) {
+  let startHour = new Date(Date.UTC(year, month, day, 9, 0));
+  const INCREMENTO = 15;
+
+
+
+
+
+
+  return horasLibres;
+}
+
 function getAllAppointmentsByDate (appointment) {
     let result = agenda.filter(elem => elem.getFullDate() === appointment.getFullDate());
 
@@ -93,22 +117,35 @@ function getAllAppointmentsByDate (appointment) {
 }
 
 function isHourTaken (newCita, arrayCitas) {
-    let hourData = {
-      msg: "Hora disponible",
-      isTaken: false
-    }
+  let isTaken = false;
 
-    arrayCitas = orderAppointments(arrayCitas);
+  arrayCitas = orderAppointments(arrayCitas);
 
-    for(let cita of arrayCitas) {
-      if(cita.getJustHour() === newCita.getJustHour() || !newCita.getFullStartHour() >= cita.getFullFinishHour() || newCita.getFullStartHour() < cita.getFullFinishHour()) {
-        hourData.msg = "La hora ya ha sido tomada";
-        hourData.isTaken = true;
-        break;
+  for(let cita of arrayCitas) {
+    if(newCita.getJustHour() !== cita.getJustHour()) {
+
+      if( newCita.getJustHour() < cita.getJustHour() ) {
+        if( newCita.getFullFinishHour() > cita.getFullStartHour() ) {
+          isTaken = true;
+          break;
+        }
+
+      } else if( newCita.getJustHour() > cita.getJustHour() ) {
+
+        if( newCita.getFullStartHour() < cita.getFullFinishHour()) {
+          isTaken = true;
+          break;
+        }
       }
-    }
 
-  return hourData;
+    } else {
+      isTaken = true;
+      break;
+    }
+  }
+
+
+  return isTaken;
 }
 
 function isOfficeHour (hour) {
