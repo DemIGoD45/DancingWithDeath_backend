@@ -51,8 +51,8 @@ function addNewAppointments  (req, res) {
   // fecha = fecha.split('-');
   // hora = hora.split(':');
 
-  fecha = isOfficeDate(fecha);
-  hora = isOfficeHour(hora);
+  fecha = isDateValid(fecha);
+  hora = isHourValid(hora);
 
   if(fecha.isValid && hora.isValid) {
 
@@ -100,7 +100,7 @@ function addNewAppointments  (req, res) {
 }
 
 function _getHoursFreeByDay (agenda, month, day, year) {
-  console.log('entramos aquí')
+
   let startHour = new Date(Date.UTC(year, month, day, 9, 0));
   const INCREMENTO = 15;
 
@@ -157,7 +157,7 @@ function isHourTaken (newCita, arrayCitas) {
   return isTaken;
 }
 
-function isOfficeHour (hour) {
+function isHourValid (hour) {
   let hourData = {
     msg: "",
     isValid: false
@@ -181,7 +181,7 @@ function isOfficeHour (hour) {
   }
 }
 
-function isOfficeDate (date) {
+function isDateValid (date) {
   let dateData = {
     msg: "",
     isValid: false
@@ -197,9 +197,16 @@ function isOfficeDate (date) {
     let aux = date.split('-');
     aux = new Date(...aux);
 
+    let hoy = new Date();
+
     if(aux.getDay() % 6 === 0) {
       dateData.msg = "La fecha debe de estar en días disponibles (Lunes - Viernes)";
       return dateData;
+
+    } else if (Date.parse(aux) < Date.parse(hoy)) {
+      dateData.msg = "La fecha no es valida, debe de ser una fecha igual o mayor a la actual"
+      return dateData;
+
     } else {
       dateData.isValid = true;
       dateData.date = date.split('-');

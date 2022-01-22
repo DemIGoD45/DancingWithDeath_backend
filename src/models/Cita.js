@@ -19,6 +19,7 @@ Cita.prototype.addMinutes = function (minutos) {
 Cita.prototype.getFullFinishHour = function () {
     let minute = this.date.getMinutes();
     let hora = this.date.getUTCHours() + 1;
+
     return `${((hora < 10) ? '0' : '') + hora}:${((minute < 10) ? '0' : '') + minute}`
 }
 
@@ -26,6 +27,7 @@ Cita.prototype.getFullFinishHour = function () {
 Cita.prototype.getFullStartHour = function () {
     let minute = this.date.getMinutes();
     let hora = this.date.getUTCHours();
+    
     return `${((hora < 10) ? '0' : '') + hora}:${((minute < 10) ? '0' : '') + minute}`
 }
 
