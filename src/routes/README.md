@@ -39,7 +39,7 @@
 
     ```javascript
 
-    fetch('http://localhost:3001/reto/api/cita/1/24/2022?filter=true')
+    fetch('http://localhost:3001/reto/api/cita/1/24/2022?filtrar=true')
     .then (resp => resp.json())
     .then(json => console.log(json))
     
